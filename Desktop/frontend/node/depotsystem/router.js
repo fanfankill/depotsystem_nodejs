@@ -2,6 +2,7 @@ const express=require('express')
 const router=express.Router();
 
 const service=require('./service.js')
+const carjoin=require('./carjoin.js')
 
 
 router.post('/login',service.login);
@@ -22,5 +23,9 @@ router.post('/editparking',service.editparking)
 router.get('/getposition',service.getposition)
 //增加停车区域
 router.post('/addposition',service.addposition)
+//通过区域筛选剩余车位
+router.post('/selectpart',service.selectpart)
 
+/**进出车位记录*/
+router.post('/addcarjoin',carjoin.addcarjoin)
 module.exports=router;

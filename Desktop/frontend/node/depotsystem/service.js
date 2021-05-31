@@ -215,6 +215,21 @@ exports.addposition = (req, res) => {
      
 }
 
+//筛选停车区域停车位的信息
+exports.selectpart= (req,res)=>{
+        let info=req.body
+        let position=info.position
+        let haveCar=info.haveCar
+        let sql='select *from 车位信息 where position=?  and  HaveCar=?'
+        let data=[position,haveCar]
+         //数据操作
+         db.base(sql,data,(result)=>{
+                console.log(result);
+                res.json(result)
+        })
+}
+       
+
 
 //获取所有管理人员
 exports.getallperson = (req, res) => {
