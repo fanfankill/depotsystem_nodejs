@@ -28,4 +28,12 @@ router.post('/selectpart',service.selectpart)
 
 /**进出车位记录*/
 router.post('/addcarjoin',carjoin.addcarjoin)
+//获取所有进出车辆
+router.get('/getallcarjoin',carjoin.getallcarjoin)
+//查询车辆出库时的小时和价格
+router.get('/searchcarjoin',carjoin.searchcarjoin)
+//驶出车辆计费登记
+router.post('/removecarjoin',carjoin.removecarjoin)
+
+
 module.exports=router;
