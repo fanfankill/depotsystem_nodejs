@@ -1,0 +1,4 @@
+<view class="search_input">
+<navigator url="/pages/search/index" open-type="navigate" class="searcgg_navigator">
+搜索</navigator>
+</view>
