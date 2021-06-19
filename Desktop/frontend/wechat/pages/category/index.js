@@ -23,7 +23,7 @@ Page({
    //获取分类数据
    getcates(){
     request({
-      url:'https://api-hmugo-web.itheima.net/api/public/v1/categories'
+      url:'/home/categories'
     }).then(res=>{
       //这个不在data里面所有可以this去获取
       this.cates=res.data.message 
