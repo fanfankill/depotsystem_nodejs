@@ -1,5 +1,6 @@
 // pages/category/index.js
 import {request} from '../../request/index.js'
+
 Page({
 
   /**
@@ -21,9 +22,9 @@ Page({
   cates:[],
 
    //获取分类数据
-   getcates(){
+    getcates(){
     request({
-      url:'/home/categories'
+      url:'/categories'
     }).then(res=>{
       //这个不在data里面所有可以this去获取
       this.cates=res.data.message 
@@ -76,8 +77,8 @@ Page({
       //不存在 发送请求
       this.getcates()
     }else{
-      //存了旧数据 定义过期时间 500s测试时间
-      if(Date.now()-Cates.time>500000){
+      //存了旧数据 定义过期时间 50s测试时间
+      if(Date.now()-Cates.time>50000){
         this.getcates()
       }else{
         //使用缓存数据

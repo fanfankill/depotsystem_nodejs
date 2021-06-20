@@ -25,9 +25,11 @@
                 <text class="title">{{item1.cat_name}}</text>
                 <text class="delimiter">/</text>
                 </view>
+                <!-- 右侧分类商品 -->
             <view class="goods_list">
                 <navigator
-                wx:for="{{item1.children}}"
+                url="/pages/good_list/index?cid={{item2.cat_id}}"
+        wx:for="{{item1.children}}"
         wx:key="cat_id"
         wx:for-index="index2"
         wx:for-item="item2">

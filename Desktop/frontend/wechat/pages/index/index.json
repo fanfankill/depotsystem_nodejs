@@ -1,6 +1,7 @@
 {
   "usingComponents": {
       "searchinput":"../../components/searchinput/searchinput"
+     
   },
   "navigationBarTitleText": "fanfan首页"
 }

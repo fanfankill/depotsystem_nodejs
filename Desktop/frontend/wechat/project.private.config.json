@@ -29,6 +29,12 @@
           "pathName": "pages/category/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/good_list/index",
+          "pathName": "pages/good_list/index",
+          "query": "cid=5",
+          "scene": null
         }
       ]
     }

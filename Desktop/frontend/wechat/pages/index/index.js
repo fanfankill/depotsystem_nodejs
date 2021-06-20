@@ -14,6 +14,7 @@ Page({
 //获取轮播图数据
   getswiperlist()
   {
+    
     request({url:'/home/swiperdata'}).then(res=>{
       console.log(res);
       this.setData({

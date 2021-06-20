@@ -1,0 +1,40 @@
+/* pages/good_list/index.wxss */
+.first_tab{
+    .goods_item{
+        border-bottom:5rpx solid gainsboro;
+        padding:20rpx 0;
+        display: flex;
+        .goods_img_wrap{
+            display: flex;
+            flex: 2;
+            justify-content: center;
+            align-items: center;
+            image{
+                width: 70%;
+            }
+        }
+    }
+
+    .good_info_wrap{
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      .goods_name{
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        //文字超出2行才省略
+        -webkit-line-clamp: 2;
+        
+        letter-spacing:5rpx;
+        color: rgb(77, 74, 74);
+       
+      }
+      .goods_price{
+          margin-top: 20rpx;
+          color: sandybrown;
+      }
+        
+    }
+}

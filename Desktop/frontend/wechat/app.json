@@ -21,7 +21,6 @@
     "navigationBarTitleText": "fanfan",
     "navigationBarTextStyle":"white",
 
-    "enablePullDownRefresh": true,
     "backgroundColor": "#0094ff"
 
   },
