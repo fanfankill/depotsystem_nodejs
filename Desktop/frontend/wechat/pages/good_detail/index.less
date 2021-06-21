@@ -1,0 +1,108 @@
+page{
+    //对底部fixed定位的高度遮挡加高度
+    padding-bottom: 90rpx;
+}
+swiper{
+    margin-top: 10rpx;
+    height: 80vw;
+    text-align: center;
+    image{
+        width: 80%;
+    }
+    
+}
+.good_price{
+    padding: 15rpx;
+    font-size: 32rpx;
+    font-weight: 6000;
+    color: var(--themeColor);
+}
+.goods_name_row{
+    display: flex;
+    padding: 10rpx 0;
+    border-bottom:25rpx solid rgb(241, 240, 240) ;
+    .goods_name{
+        flex: 8;
+        color: black;
+        font-size: 30rpx;
+        padding: 0 15rpx;
+        //超出部分省略处理
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp: 2;
+    }
+    .goods_collect{
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-left:1rpx solid black ;
+        .collect_text{
+    
+        }
+
+    }
+}
+
+.goods_info{
+    .goods_info_title{ 
+        font-size: 32rpx;
+        font-weight: 600;
+        padding: 10rpx 15rpx;
+        color: var(--themeColor);
+      
+        border-bottom:25rpx solid rgb(241, 240, 240) ;
+    }
+    .goods_info_content{
+
+    }
+}
+
+//底部栏样式
+.btm_tool{
+    border-top:1rpx solid #ccc ;
+    position: fixed;
+    bottom: 0;
+    height: 90rpx;
+    left: 0;
+    width: 100%;
+    display: flex;
+     background-color:white ;
+    .tool_item{
+        flex: 2; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        button{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+    }
+    .tool_che{
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background-color: rgb(241, 239, 70);
+    }
+    .tool_buy{
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background-color: red;
+    }
+}

@@ -35,6 +35,12 @@
           "pathName": "pages/good_list/index",
           "query": "cid=5",
           "scene": null
+        },
+        {
+          "name": "pages/good_detail/index",
+          "pathName": "pages/good_detail/index",
+          "query": "goods_id=17927",
+          "scene": null
         }
       ]
     }
