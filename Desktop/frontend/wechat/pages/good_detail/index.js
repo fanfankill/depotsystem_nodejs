@@ -46,7 +46,37 @@ Page({
       urls
     
     });
-  }
+  },
+
+  //商品加入购物车
+  handlecartadd()
+  {
+    //先获取缓存中的购物车数组
+    let cart=wx.getStorageSync("cart")||[];
+    //判断是否存在数组中
+    let index=cart.findIndex(v=>v.goods_id===this.goodsinfo.goods_id)
+    if(index==-1)
+    {
+      //不存在 第一次添加
+      this.goodsinfo.num=1;
+      cart.push(this.goodsinfo)
+
+    }else{
+      //已经存在 num++
+      console.log('2');
+      cart[index].num++;
+    }
+    //重新加入缓存
+    wx.setStorageSync("cart", cart);
+
+    //弹窗提示
+    wx.showToast({
+      title: '加入成功',
+      icon: 'succees',
+      mask: true,
+     
+    });
+  },
 
   
 })

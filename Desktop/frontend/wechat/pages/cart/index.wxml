@@ -1,2 +1,86 @@
-<!--pages/cart/index.wxml-->
-<text>pages/cart/index.wxml</text>
+<!-- 收货地址 -->
+<view class="revice_address_row"> 
+       <!-- 显示收货地址 -->
+       <view class="user_info_row"  wx:if="{{address.userName}}">
+        <viec class="user_info">
+         <view>收货人：{{address.userName}}</view>
+         <view>{{address.provinceName+address.cityName+address.countyName+address.detailInfo}}</view>
+        </viec>
+        <view class="user_phone">{{address.telNumber}}</view>
+     </view>
+    <!-- 详细信息存在时候 按钮消失 -->
+    <view class="address_btn" wx:else >
+        <button bindtap="handleaddress" type="primary" plain>获取收货地址</button>
+    </view>
+
+ 
+</view>
+
+
+<!-- 购物车展示 -->
+<view class="cart_content">
+        <view class="cart_title">购物车</view>
+        <view class="cart_main">
+            <view class="cart_item">
+                    <!-- 复选框 -->
+                    <view class="cart_chk_wrap"  >
+                        <checkbox-group bindchange="">
+                            <checkbox></checkbox>
+                        </checkbox-group>
+                    </view>
+                        
+                    <!-- 商品图片-->
+                    
+                        <navigator  class="cart_img_wrap">
+                            <image mode="widthFix" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3566088443,3713209594&fm=26&gp=0.jpg"></image>
+                        </navigator>
+                    
+
+                    <!-- 商品信息 -->
+                    <view class="cart_info_wrap">
+                        <view class="goods_name">很长的文字描述</view>
+                        <view class="goods_price_wrap">
+                            <view class="goods_price">￥5555</view>
+                        <view class="cart_num_tool">
+                            <view class="num_sub">-</view>
+                            <view class="goods_num">2</view>
+                            <view class="num_add">+</view>
+                        </view>
+                        </view>
+                        
+                    </view>
+                    
+            </view>
+            <view class="cart_item">
+                <!-- 复选框 -->
+                <view class="cart_chk_wrap"  >
+                    <checkbox-group bindchange="">
+                        <checkbox></checkbox>
+                    </checkbox-group>
+                </view>
+                    
+                <!-- 商品图片-->
+                
+                    <navigator  class="cart_img_wrap">
+                        <image mode="widthFix" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3566088443,3713209594&fm=26&gp=0.jpg"></image>
+                    </navigator>
+                
+
+                <!-- 商品信息 -->
+                <view class="cart_info_wrap">
+                    <view class="goods_name">很长的文字描述</view>
+                    <view class="goods_price_wrap">
+                        <view class="goods_price">￥5555</view>
+                    <view class="cart_num_tool">
+                        <view class="num_sub">-</view>
+                        <view class="goods_num">2</view>
+                        <view class="num_add">+</view>
+                    </view>
+                    </view>
+                    
+                </view>
+                
+        </view>
+            
+        </view>
+</view>

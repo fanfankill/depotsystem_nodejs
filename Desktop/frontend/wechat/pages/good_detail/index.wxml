@@ -55,7 +55,7 @@
         <view>购物车</view>
     </navigator>
 
-    <view class="tool_che">
+    <view class="tool_che" bindtap="handlecartadd">
      
        加入购物车
     </view>
