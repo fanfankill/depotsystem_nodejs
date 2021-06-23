@@ -59,6 +59,8 @@ Page({
     {
       //不存在 第一次添加
       this.goodsinfo.num=1;
+      //对应复选框的打钩
+      this.goodsinfo.checked=true
       cart.push(this.goodsinfo)
 
     }else{
