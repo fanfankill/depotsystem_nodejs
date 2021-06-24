@@ -1,8 +1,9 @@
 const express=require('express')
 const router=express.Router();
 
-const service=require('./service.js')
+const service=require('./service/service.js')
 const carjoin=require('./carjoin.js')
+const gettotal=require('./service/gettotal')
 
 
 router.post('/login',service.login);
@@ -35,5 +36,9 @@ router.get('/searchcarjoin',carjoin.searchcarjoin)
 //驶出车辆计费登记
 router.post('/removecarjoin',carjoin.removecarjoin)
 
+//获取车位总数 空闲车位数目 固定车位数
+router.get('/gettotalcar',gettotal.gettotalcar)
+//圆圈数据
+router.get('/getciclemes',gettotal.getciclemes)
 
 module.exports=router;

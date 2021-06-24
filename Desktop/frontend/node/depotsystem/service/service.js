@@ -1,5 +1,5 @@
 //业务模块
-const db=require('./db.js')
+const db=require('../db.js')
 
 
 //登录
