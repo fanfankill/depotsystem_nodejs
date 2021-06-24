@@ -242,4 +242,3 @@ exports.getallperson = (req, res) => {
         })
 }
 
-

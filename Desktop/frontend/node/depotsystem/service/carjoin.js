@@ -1,5 +1,5 @@
 //业务模块
-const db = require('./db.js')
+const db = require('../db.js')
 const moment = require('moment')
 
 
@@ -54,7 +54,8 @@ exports.getallcarjoin=(req,res)=>{
     let data=[req.query.isdone]
     console.log(req.query.isdone);
     db.base(sql,data,(result=>{
-        res.json(result)
+        result.forEach(v=>v.ComeTime=moment(v.ComeTime).format('YYYY-MM-DD HH:mm:ss'))
+        res.json(result,)
     }))
 }
 //查询车辆出库时的小时和价格 未完成出库的接口
@@ -67,13 +68,14 @@ exports.searchcarjoin=(req,res)=>{
         let data=[Id]
         db.base(sql,data,(result=>{
        
-            
             let cometime=moment(result[0].ComeTime).format('YYYY-MM-DD HH:mm:ss');
-
+           
             let time1=moment(nowtime)
             let time2=moment(cometime)
             
             let allhours=moment(time1).diff(moment(time2), 'hours')
+
+            console.log(allhours);
 
             let leavetime=moment(result[0].LeaveTime).format('YYYY-MM-DD HH:mm:ss');
 
@@ -131,13 +133,17 @@ exports.searchcarjoin=(req,res)=>{
 //驶出车辆计费登记
 exports.removecarjoin=(req,res)=>{
     let info=req.body
-    
-    let sql='update 进出记录表 set LeaveTime=?,totalfare=?,IsDone=? where Id=?'
+    let sql='update 进出记录表 set LeaveTime=?,totalfare=?,IsDone=? ,day=?where Id=?'
+
+    //当前日期
+    let day=moment(Date.now()).format('YYYY-MM-DD')
+    console.log(day);
+
     let nowtime=moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
     console.log("Id是"+info.CarPortNumber);
     console.log("时间"+nowtime);
     console.log("总费用"+info.totalfare);
-    let data=[nowtime,info.totalfare,1,info.Id]
+    let data=[nowtime,info.totalfare,1,day,info.Id]
     console.log(info);
     db.base(sql,data,(result=>{
         

@@ -1,5 +1,6 @@
 //业务模块
 const db=require('../db.js')
+const moment = require('moment')
 
 //返回首页的总车位数目 空闲车位数 固定车位数
 exports.gettotalcar=(req,res)=>{
@@ -37,4 +38,24 @@ exports.getciclemes=(req,res)=>{
                 'circlemessage':result
             })
         })
+}
+
+
+//每日统计
+exports.getxianmes=(req,res)=>{
+    let sql='select day,sum(totalfare) as totaldayfare from 进出记录表  group by day  order by day asc'
+    db.base(sql,null,(result)=>{
+
+        //最多返回七个数组 而且按最新时间排列返回
+        result=result.slice(0,8)
+        console.log(result);
+        //去除为出库的数组
+        result.forEach((v,i)=>{if(!v.day)
+            {result.splice(i,1)}
+            v.day=moment(v.day).format('YYYY-MM-DD ');
+        })
+        res.json({
+            result
+        })
+    })
 }

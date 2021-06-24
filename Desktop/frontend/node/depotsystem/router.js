@@ -2,8 +2,8 @@ const express=require('express')
 const router=express.Router();
 
 const service=require('./service/service.js')
-const carjoin=require('./carjoin.js')
-const gettotal=require('./service/gettotal')
+const carjoin=require('./service/carjoin.js')
+const gettotal=require('./service/gettotal.js')
 
 
 router.post('/login',service.login);
@@ -40,5 +40,7 @@ router.post('/removecarjoin',carjoin.removecarjoin)
 router.get('/gettotalcar',gettotal.gettotalcar)
 //圆圈数据
 router.get('/getciclemes',gettotal.getciclemes)
+//折线图数据
+router.get('/getxianmes',gettotal.getxianmes)
 
 module.exports=router;
