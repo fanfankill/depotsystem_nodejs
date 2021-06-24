@@ -42,7 +42,7 @@ Page({
     cart.forEach(v=>{
       if(v.checked)
       {
-        totalprice+=v.goods_price;
+        totalprice+=(v.goods_price*v.num);
         totalnum+=v.num
       }else{
         allchecked=false
@@ -61,6 +61,87 @@ Page({
      allchecked
    })
    
+  },
+
+  //结算方法
+  hanlepay()
+  {
+    const {address,totalnum}=this.data
+    if(!address.userName)
+    {
+      wx.showToast({
+        title: '未添加收货地址',
+        icon: 'none',
+        mask: false,  
+      });
+    }
+    //用户没有选择商品
+    if(totalnum==0)
+    {
+      wx.showToast({
+        title: '购物车还未选购商品',
+        icon: 'none',
+        mask: false,  
+      });
+    }
+    //正常的话跳转支付界面
+    wx.navigateTo({
+      url: '/pages/pay/index',
+    });
+  },
+  //减加数量变化点击方法
+  handlenumber(e)
+  { 
+    const {operation,id}=e.currentTarget.dataset
+    //获取购物车数组来匹配
+    const {cart}=this.data
+
+    //对找到的值进行修改
+    const index=cart.findIndex(v=>v.goods_id==id)
+
+    //当商品数量为1时候点击为删除
+    if(cart[index].num==1&&operation==-1)
+    {
+      //弹窗提示
+      wx.showModal({
+        title: '商品删除',
+        content: '是否要删除该商品',
+        showCancel: true,
+        cancelText: '取消',
+        cancelColor: '#000000',
+        confirmText: '确定',
+        confirmColor: '#3CC51F',
+        success: (result) => {
+          if(result.confirm){
+              //存入缓存
+              cart.splice(index,1)
+             this.setcart(cart)
+          }
+        },
+  
+      });
+
+    }
+    //都要记得存进去
+    else{
+      cart[index].num+=operation
+      this.setcart(cart)
+    }
+    
+  },
+
+  //全选反选复选框方法
+  handeleallchecked(e)
+  {
+
+    let {cart,allchecked}=this.data
+    //取反
+    allchecked=!allchecked
+
+    //forEach会改变原数组
+    cart.forEach(v=>v.checked=allchecked);
+    //返回data
+      this.setcart(cart)
   },
   //对复选框的方法 改变总价格和数量
   handleitemchoose(e)
