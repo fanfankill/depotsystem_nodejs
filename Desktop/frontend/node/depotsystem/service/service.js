@@ -34,6 +34,7 @@ exports.login = (req, res) => {
                 }
         })
 }
+
 //获取所有车位信息+分页
 exports.getallparking=(req,res)=>{
         let info=req.query

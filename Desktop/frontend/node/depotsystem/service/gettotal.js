@@ -1,12 +1,15 @@
 //业务模块
 const db=require('../db.js')
 const moment = require('moment')
+const weather =require('./moudle_js/weather')
 
 //返回首页的总车位数目 空闲车位数 固定车位数
 exports.gettotalcar=(req,res)=>{
     let sql='select count(*) as totalcarport from 车位信息'
     let sql2='select count(*) as totalfreecar from 车位信息 where HaveCar=1'
     let sql3='select  count(*) as totalfixcar  from 车位信息 where FixCar=0' 
+
+
     db.base(sql,null,(result)=>{
       let res1=result[0].totalcarport
       db.base(sql2,null,(result2)=>{
@@ -26,6 +29,15 @@ exports.gettotalcar=(req,res)=>{
       })
    
     })
+}
+//天气
+exports.getweather=(req,res)=>{
+    weather.getweather('101250101',(data)=>{
+            console.log(data.weatherinfo);
+            res.json({
+               result:data.weatherinfo
+            })
+        })
 }
 
 //停车区域划分图的接口

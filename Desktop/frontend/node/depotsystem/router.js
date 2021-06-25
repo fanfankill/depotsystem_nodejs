@@ -4,6 +4,7 @@ const router=express.Router();
 const service=require('./service/service.js')
 const carjoin=require('./service/carjoin.js')
 const gettotal=require('./service/gettotal.js')
+const carperson=require('./service/carperson')
 
 
 router.post('/login',service.login);
@@ -42,5 +43,11 @@ router.get('/gettotalcar',gettotal.gettotalcar)
 router.get('/getciclemes',gettotal.getciclemes)
 //折线图数据
 router.get('/getxianmes',gettotal.getxianmes)
+
+//获取车主信息
+router.get('/getpersonmes',carperson.getpersonmes)
+
+//天气
+router.get('/getweather',gettotal.getweather)
 
 module.exports=router;

@@ -3,6 +3,8 @@ const db = require('../db.js')
 const moment = require('moment')
 
 
+
+
 //添加进出车位信息
 exports.addcarjoin = (req, res) => {
     let sql = 'insert into 进出记录表 set?'
