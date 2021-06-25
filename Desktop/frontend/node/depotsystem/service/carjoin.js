@@ -54,7 +54,10 @@ exports.getallcarjoin=(req,res)=>{
     let data=[req.query.isdone]
     console.log(req.query.isdone);
     db.base(sql,data,(result=>{
-        result.forEach(v=>v.ComeTime=moment(v.ComeTime).format('YYYY-MM-DD HH:mm:ss'))
+        result.forEach(v=>{
+            v.ComeTime=moment(v.ComeTime).format('YYYY-MM-DD HH:mm:ss')
+            v.LeaveTime=moment(v.LeaveTime).format('YYYY-MM-DD HH:mm:ss')
+        })
         res.json(result,)
     }))
 }
