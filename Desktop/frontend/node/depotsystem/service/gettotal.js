@@ -55,7 +55,7 @@ exports.getciclemes=(req,res)=>{
 
 //每日统计
 exports.getxianmes=(req,res)=>{
-    let sql='select day,sum(totalfare) as totaldayfare from 进出记录表  group by day  order by day asc'
+    let sql='select date as day ,sum(fare) as totaldayfare from 收费详细  group by date  order by date asc'
     db.base(sql,null,(result)=>{
 
         //最多返回七个数组 而且按最新时间排列返回

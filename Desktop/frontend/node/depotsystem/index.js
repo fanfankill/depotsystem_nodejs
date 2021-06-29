@@ -20,6 +20,7 @@ app.all('*', function (req, res, next) {
     next();
   });
 
+
 //启动服务器
 //配置路由
 app.use(router);

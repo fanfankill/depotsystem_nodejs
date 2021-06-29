@@ -46,6 +46,23 @@ router.get('/getxianmes',gettotal.getxianmes)
 
 //获取车主信息
 router.get('/getpersonmes',carperson.getpersonmes)
+//新增车主信息
+router.post('/addpersonmes',carperson.addpersonmes)
+//删除车主信息
+router.post('/deletepersonmes',carperson.deletepersonmes)
+//修改车主信息
+router.post('/editpersonmes',carperson.editpersonmes)
+//查找不是固定车位的信息
+router.get('/getnotfixport',carperson.getnotfixport)
+//收费表记录
+router.post('/getfare',carperson.getfare)
+
+//获取停车区域
+router.get('/getallposition',carperson.getallposition)
+//删除停车区域
+router.post('/deleteposition',carperson.deleteposition)
+
+
 
 //天气
 router.get('/getweather',gettotal.getweather)

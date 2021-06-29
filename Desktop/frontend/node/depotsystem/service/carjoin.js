@@ -50,9 +50,10 @@ exports.addcarjoin = (req, res) => {
 
     }))
 }
-//获取所有进出车辆
+
+//获取所有进出车辆表数据
 exports.getallcarjoin=(req,res)=>{
-    let sql='select * from 进出记录表 where IsDone=?'
+    let sql='select * from 进出记录表 where IsDone=? group by ComeTime'
     let data=[req.query.isdone]
     console.log(req.query.isdone);
     db.base(sql,data,(result=>{
@@ -60,9 +61,10 @@ exports.getallcarjoin=(req,res)=>{
             v.ComeTime=moment(v.ComeTime).format('YYYY-MM-DD HH:mm:ss')
             v.LeaveTime=moment(v.LeaveTime).format('YYYY-MM-DD HH:mm:ss')
         })
-        res.json(result,)
+        res.json(result)
     }))
 }
+
 //查询车辆出库时的小时和价格 未完成出库的接口
 exports.searchcarjoin=(req,res)=>{
     console.log(req.query);
@@ -138,6 +140,7 @@ exports.searchcarjoin=(req,res)=>{
 //驶出车辆计费登记
 exports.removecarjoin=(req,res)=>{
     let info=req.body
+    //进出记录表收费
     let sql='update 进出记录表 set LeaveTime=?,totalfare=?,IsDone=? ,day=?where Id=?'
 
     //当前日期
@@ -152,17 +155,33 @@ exports.removecarjoin=(req,res)=>{
     console.log(info);
     db.base(sql,data,(result=>{
         
-        let sql2='update 车位信息 set HaveCar=?,CarNumber=? where CarPortNumber=?'
-        let data2=[1,null,info.CarPortNumber]
-        db.base(sql2,data2,(result2=>{
-            res.json({
-                'code':1,
-                'message':'出库成功',
-                result,
-                result2
-                
-            })
-        }))
+        //总收费表更新记录
+        let sql2='insert into 收费详细  set ?'
+        let data2={
+            type:0,
+            fare:info.totalfare,
+            date:day
+        }
+
+        db.base(sql2,data2,result2=>{
+
+           
+            //关联表更新
+            let sql3='update 车位信息 set HaveCar=?,CarNumber=? where CarPortNumber=?'
+            let data3=[1,null,info.CarPortNumber]
+            db.base(sql3,data3,(result3=>{
+                res.json({
+                    'code':1,
+                    'message':'出库成功',
+                    result,
+                    result3
+                    
+                })
+            }))
+        })
+
+
+    
     }))
 
 }

@@ -1,12 +1,17 @@
 //业务模块
 const db=require('../db.js')
 
+const settime=require('./settime')
+
 
 //登录
 exports.login = (req, res) => {
         let sql='select * from 人员登录 where username=? and password=?'
         let info=req.body
         let data=[info.username,info.password]
+        
+//        //计数器操作
+//        settime.settime(3000)
 
         //数据操作
         db.base(sql,data,(result)=>{
@@ -16,7 +21,7 @@ exports.login = (req, res) => {
                         res.json({
                                 'code':0,
                                 'message':'用户名或密码不正确'
-                        })
+                        })  
                 }
                 else{
                 /**查到了换个表查询 */           
@@ -47,7 +52,7 @@ exports.getallparking=(req,res)=>{
 
         let sql2='select count (*) as pagecount from 车位信息' 
         db.base(sql2,null,(result)=>{
-                console.log(result.length);
+          
                
                    //分页函数
         db.base(sql,null,(result2)=>{
@@ -170,6 +175,7 @@ exports.getposition = (req, res) => {
         let sql='select * from 停车区域'
 
         //数据操作
+      setTimeout(() => {
         db.base(sql,null,(result)=>{
                 console.log(result);
                 res.json({
@@ -178,7 +184,8 @@ exports.getposition = (req, res) => {
                         "lists":result,
 
                 })
-        })
+        }) 
+      }, 5000);
 }
 //增加停车区域
 exports.addposition = (req, res) => {
@@ -186,7 +193,9 @@ exports.addposition = (req, res) => {
         let info=req.body
         let data={position:info.position,
                   fare:info.fare,
-                  decration:info.decration}
+                  decration:info.decration,
+                  monthfare:info.monthfare,
+                  fixedfare:info.fixedfare}
         
                 //查重
                   let sql2='select *from 停车区域 where position=? '
@@ -221,7 +230,7 @@ exports.selectpart= (req,res)=>{
         let info=req.body
         let position=info.position
         let haveCar=info.haveCar
-        let sql='select *from 车位信息 where position=?  and  HaveCar=?'
+        let sql='select *from 车位信息 where position=?  and  HaveCar=? and FixCar=1 '
         let data=[position,haveCar]
          //数据操作
          db.base(sql,data,(result)=>{
