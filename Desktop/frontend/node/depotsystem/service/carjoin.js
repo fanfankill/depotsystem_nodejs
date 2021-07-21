@@ -51,6 +51,30 @@ exports.addcarjoin = (req, res) => {
     }))
 }
 
+//查询车辆接口
+exports.searchcar=(req,res)=>{
+
+    let info=req.body
+    let sql='select * from 进出记录表 where CarNumber=? and IsDone=?'
+    let data=[info.CarNumber,info.IsDone]
+    db.base(sql,data,result=>{
+        if(result.length==0)
+        {
+            res.json({
+                'message':'未查询到该车牌',
+                'flag':0
+            })
+        }
+        else{
+            res.json({
+                result,
+                'message':'查询成功',
+                'flag':1
+            })
+        }
+    })
+}
+
 //获取所有进出车辆表数据
 exports.getallcarjoin=(req,res)=>{
     let sql='select * from 进出记录表 where IsDone=? group by ComeTime'

@@ -55,11 +55,11 @@ exports.getciclemes=(req,res)=>{
 
 //每日统计
 exports.getxianmes=(req,res)=>{
-    let sql='select date as day ,sum(fare) as totaldayfare from 收费详细  group by date  order by date asc'
+    let sql='select date as day ,sum(fare) as totaldayfare from 收费详细  group by date  order by date desc'
     db.base(sql,null,(result)=>{
 
         //最多返回七个数组 而且按最新时间排列返回
-        result=result.slice(0,8)
+        result=result.slice(0,7)
         console.log(result);
         //去除为出库的数组
         result.forEach((v,i)=>{if(!v.day)

@@ -1,7 +1,6 @@
 //业务模块
 const db=require('../db.js')
-
-const settime=require('./settime')
+const moment = require('moment')
 
 
 //登录
@@ -24,24 +23,87 @@ exports.login = (req, res) => {
                         })  
                 }
                 else{
-                /**查到了换个表查询 */           
-                let sql2='select * from 管理员 where AdminId=?'
-                let data2=[result[0].AdminId]
-                db.base(sql2,data2,(result)=>{
-                        
+
                         res.json({
                                 result,
                                 'code':1,
-                                'message':'登陆成功'
-                        })
-                })
-                        
+                                'message':'登录成功!'
+
+                        })  
                 }
+            
+        })
+} 
+
+//注册
+exports.register=(req,res)=>{
+        let info=req.body
+        let sql='insert into 人员登录 set?'
+        let data={
+                username:info.username,
+                password:info.password,
+                userimg:'public/imgs/moren.jpg',
+                nickname:'默认姓名',
+                sex:'男',
+                address:'默认地址',
+                privatemes:'默认签名',
+                jointime:moment(Date.now()+84600000).format('YYYY-MM-DD')
+        }
+
+        //查重
+        let sql2='select * from  人员登录 where username=?'
+        let data2=[info.username]
+
+
+        db.base(sql2,data2,result=>{
+               if(result.length==0)
+               {        
+                        db.base(sql,data,result=>{
+                                res.json({
+                                        'message':'注册成功',
+                                        'flag':1
+                                })
+                        })
+               }else{
+                       res.json({
+                               'message':'已存在该手机号码',
+                               'flag':0
+                       })
+               }
         })
 }
 
+//管理员基本信息修改
+exports.editadminmessage=(req,res)=>{
+        let info=req.body
+        let sql='update 人员登录 set nickname=? , sex=? , address=? , privatemes=? where AdminId=?'
+        let data=[info.nickname,info.sex,info.address,info.privatemes,info.AdminId]
+
+        db.base(sql,data,result=>{
+                console.log(result);
+                res.json({
+                  'message':'修改基本信息成功',
+                  'flag':1
+                })
+        })
+}
+
+
+//通过ID获取登录人员信息
+exports.getadminmessage=(req,res)=>{
+        let sql='select * from 人员登录 where AdminId=?'
+        let data=req.query.AdminId
+
+        db.base(sql,data,result=>{
+                res.json({
+                        'Adminmessage':result,
+                        'code':1,
+                })
+        })
+}
 //获取所有车位信息+分页
 exports.getallparking=(req,res)=>{
+     setTimeout(()=>{
         let info=req.query
         let pagesize=info.pagesize||5
         let currentpage=((info.currentpage-1)*pagesize)||0
@@ -66,6 +128,7 @@ exports.getallparking=(req,res)=>{
          })
          })
 
+     },0)
 
       
         
@@ -175,7 +238,7 @@ exports.getposition = (req, res) => {
         let sql='select * from 停车区域'
 
         //数据操作
-      setTimeout(() => {
+     
         db.base(sql,null,(result)=>{
                 console.log(result);
                 res.json({
@@ -185,7 +248,7 @@ exports.getposition = (req, res) => {
 
                 })
         }) 
-      }, 5000);
+    
 }
 //增加停车区域
 exports.addposition = (req, res) => {
@@ -225,6 +288,21 @@ exports.addposition = (req, res) => {
      
 }
 
+//对停车区域基本信息的修改
+exports.editpositionbase=(req,res)=>{
+        let info=req.body
+        let sql='update 停车区域 set fare=? , decration=? , monthfare=? ,fixedfare=? where position=?'
+        let data=[info.fare,info.decration,info.monthfare,info.fixedfare,info.position]
+
+        db.base(sql,data,result=>{
+                res.json({
+                        'message':'修改停车区域基本信息成功',
+                        'flag':1
+                })
+        })
+
+}
+
 //筛选停车区域停车位的信息
 exports.selectpart= (req,res)=>{
         let info=req.body
@@ -243,10 +321,10 @@ exports.selectpart= (req,res)=>{
 
 //获取所有管理人员
 exports.getallperson = (req, res) => {
-        let sql='select * from 管理员'
-
+        let sql='select * from 人员登录 where AdminId!=?'
+        let data=req.query.AdminId
         //数据操作
-        db.base(sql,null,(result)=>{
+        db.base(sql,data,(result)=>{
                 console.log(result);
                 res.json(result)
         })

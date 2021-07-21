@@ -5,7 +5,7 @@ const moment = require('moment')
 
 //获取所有车主信息
 exports.getpersonmes=(req,res)=>{
-    let sql='select * from 车主信息 left join 车位信息  on  车主信息.CarportNumber=车位信息.CarportNumber '
+    let sql='select * from 车主信息,车位信息,停车区域 where 车主信息.CarportNumber=车位信息.CarportNumber and 车位信息.position =停车区域.position  '
 db.base(sql,null,(result)=>{
     res.json({
         result    
@@ -38,7 +38,7 @@ exports.addpersonmes=(req,res)=>{
 
  
 
-    let sql2='update 车位信息 set FixCar =0,CarpersonName=? ,CarNumber=?,DueDate=? where CarportNumber=?'
+    let sql2='update 车位信息 set FixCar =0 , HaveCar=0 ,CarpersonName=? ,CarNumber=?,DueDate=? where CarportNumber=?'
     let data2=[info.PersonName,info.CarNumber,lasttime,info.CarportNumber]
     //先修改这个车位的固定状态
     db.base(sql2,data2,(result)=>{
@@ -170,5 +170,52 @@ exports.deleteposition=(req,res)=>{
         }
     })
 
+}
+
+
+//续费操作
+exports.addcartime=(req,res)=>{
+        let info = req.body
+        let sql='update 车位信息 set DueDate=? where CarportNumber=?'
+
+    //计算到期时间
+    let nowdata=info.currentdate
+    //需要增加的时长 按月计算
+    let addtime=info.addtime
+   let lasttime= moment(nowdata).add(addtime, 'months')
+    //格式化时间 最终的时间
+    lasttime=moment(lasttime).format()
+
+    let data=[lasttime,info.CarportNumber]
+
+    //先进行表更新 后再进入价格统计表
+    db.base(sql,data,result=>{
+            console.log(result);
+
+            //获取当前时间 只精确到日
+            let nowday=moment(new Date()).format('YYYY-MM-DD')
+       
+            let sql2='insert into 收费详细 set ?'
+            let data2={
+                type:1,
+                fare:info.totalfare,
+                date:nowday
+            }
+            db.base(sql2,data2,result2=>{
+                res.json({
+                    'message':'续费成功',
+                    'flag':1
+                })
+            })
+    })         
+}
+
+
+
+//获取头像接口
+
+exports.getimg=(req,res)=>{
+
+    let sql='select * from 管理员'
 }
 
